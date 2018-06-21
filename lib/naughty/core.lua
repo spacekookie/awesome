@@ -72,6 +72,21 @@ naughty.config = {
     notify_callback = nil,
 }
 
+--[[--
+Naughty logger configuration – a table containing logging state
+
+Allow naughty to call a custom user function for notification logging
+purposes. By default logging is only enabled when naughty is suspended.
+
+@table naughty.logger
+
+--]]
+--
+naughty.logger = {
+    always = false,
+    logging_callback = nil,
+}
+
 --- Notification presets for `naughty.notify`.
 -- This holds presets for different purposes.  A preset is a table of any
 -- parameters for `notify()`, overriding the default values
@@ -265,6 +280,16 @@ function naughty.toggle()
     else
         naughty.suspend()
     end
+end
+
+--- Provide a logging handler for notifications
+-- 
+-- @param handle user function to call
+-- @param always always log or only when suspended
+--   true | false (default: false)
+function naughty.set_logger(handle, always = false)
+    naughty.logger.always = always
+    naughty.logger.logging_callback = handle
 end
 
 --- Evaluate desired position of the notification by index - internal
