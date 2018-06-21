@@ -888,6 +888,11 @@ function naughty.notify(args)
         table.insert(naughty.notifications.suspended, notification)
     end
 
+    -- log notification if always wanted OR currently suspended
+    if naughty.logger not nil and naughty.logger.always or suspended then
+        naughty.logger(notification)
+    end
+
     -- return the notification
     return notification
 end
